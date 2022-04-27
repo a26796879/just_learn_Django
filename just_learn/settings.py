@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'just_learn.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  #PostgreSQL
+        'NAME': 'postgres',  #資料庫名稱
+        'USER': 'postgres',  #資料庫帳號
+        'PASSWORD': 'postgres',  #資料庫密碼
+        'HOST': 'pgdb',  #Server(伺服器)位址
+        'PORT': '5432'  #PostgreSQL Port號
     }
 }
 
