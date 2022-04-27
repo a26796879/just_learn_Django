@@ -24,4 +24,4 @@ class GroupViewSet(viewsets.ModelViewSet):
 class NewsViewSet(viewsets.ModelViewSet):
     queryset = news_crawler.objects.all()
     serializer_class = NewsSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
