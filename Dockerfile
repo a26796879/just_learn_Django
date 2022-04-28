@@ -1,8 +1,6 @@
 FROM python:3
 FROM debian:bullseye-slim
 
-SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
-
 # Generate locale C.UTF-8 for postgres and general locale data
 ENV LANG C.UTF-8
 
@@ -10,14 +8,18 @@ ENV LANG C.UTF-8
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
+        python3-pip \
         curl \
         dirmngr \
         fonts-noto-cjk \
         gnupg \
         libssl-dev \
         git \
-        nano
-RUN pip install -r requirements.txt
-ENV PYTHONUNBUFFERED=1
+        nano \
+        libpq-dev \
+        python-dev
+COPY requirements.txt /opt/app/requirements.txt
 WORKDIR /usr/src/app
-COPY requirements.txt ./
+RUN pip3 freeze > requirements.txt
+COPY . /usr/src/app
+ENV PYTHONUNBUFFERED=1
