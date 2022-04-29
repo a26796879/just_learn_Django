@@ -1,17 +1,18 @@
-version: "3.8"
-   
+version: "3.7"
+
 services:
     django:
         build: .
         container_name: django
-        command: python manage.py runserver 0.0.0.0:8000
+        command: >
+            bash -c "python3 manage.py migrate
+            && python3 manage.py runserver 0.0.0.0:8000"
         volumes:
             - .:/usr/src/app/
         ports:
             - "80:8000"
         environment:
             - DEBUG=1
-            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
             - CELERY_BROKER=amqp://niceguy:niceguy@35.227.175.4:5672
             - CELERY_BACKEND=redis://redis:6379/0
         depends_on:
@@ -19,14 +20,13 @@ services:
             - redis
     celery:
         build: .
-        command: celery -A just_learn flower -l INFO
+        command: 'celery -A just_learn flower -l INFO'
         volumes:
             - .:/usr/src/app
         ports:
             - "5555:5555"
         environment:
             - DEBUG=1
-            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
             - CELERY_BROKER=amqp://niceguy:niceguy@35.227.175.4:5672
             - CELERY_BACKEND=redis://redis:6379/0
         depends_on:
