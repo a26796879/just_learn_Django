@@ -20,7 +20,9 @@ services:
             - redis
     celery:
         build: .
-        command: 'celery -A just_learn flower -l INFO'
+        command: >
+            bash -c 'celery -A just_learn flower -l INFO
+            && celery control shutdown'
         volumes:
             - .:/usr/src/app
         ports:
