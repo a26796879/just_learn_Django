@@ -59,7 +59,7 @@ def get_udn_news(keyword):
             "keyword":keyword
         }
         expect_time = datetime.today() - timedelta(hours=8)
-        if requests.get(check_exist_url+title).json() == []:
+        if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
             else:
@@ -83,7 +83,7 @@ def get_apple_news(keyword):
             "keyword":keyword
         }
         expect_time = datetime.today() - timedelta(hours=8)
-        if requests.get(check_exist_url+title).json() == []:
+        if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
             else:
@@ -113,7 +113,7 @@ def get_setn_news(keyword):
             "keyword":keyword
         }
         expect_time = datetime.today() - timedelta(hours=8)
-        if requests.get(check_exist_url+title).json() == []:
+        if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
             else:
@@ -142,7 +142,7 @@ def get_ettoday_news(keyword):
             "keyword":keyword
         }
         expect_time = datetime.today() - timedelta(hours=8)
-        if requests.get(check_exist_url+title).json() == []:
+        if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
             else:
@@ -173,7 +173,7 @@ def get_TVBS_news(keyword):
             "keyword":keyword
         }
         expect_time = datetime.today() - timedelta(hours=8)
-        if requests.get(check_exist_url+title).json() == []:
+        if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
             else:
@@ -190,7 +190,6 @@ def get_china_news(keyword):
     for i in range(len(titles)):
         title = titles[i].text
         url = titles[i].get('href')
-        image = images[i].get('src')
         dateString = dates[i].get('datetime')
         dateFormatter = "%Y-%m-%d %H:%M"
         published_date = datetime.strptime(dateString, dateFormatter)
@@ -202,7 +201,7 @@ def get_china_news(keyword):
             "keyword":keyword
         }
         expect_time = datetime.today() - timedelta(hours=8)
-        if requests.get(check_exist_url+title).json() == []:
+        if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
             else:
@@ -232,7 +231,7 @@ def get_storm_news(keyword):
             "keyword":keyword
         }
         expect_time = datetime.today() - timedelta(hours=8)
-        if requests.get(check_exist_url+title).json() == []:
+        if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
             else:
@@ -262,7 +261,7 @@ def get_ttv_news(keyword):
             "keyword":keyword
         }
         expect_time = datetime.today() - timedelta(hours=8)
-        if requests.get(check_exist_url+title).json() == []:
+        if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
             else:
@@ -292,7 +291,7 @@ def get_ftv_news(keyword):
             "keyword":keyword
         }
         expect_time = datetime.today() - timedelta(hours=8)
-        if requests.get(check_exist_url+title).json() == []:
+        if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
             else:
@@ -325,7 +324,7 @@ def get_cna_news(keyword):
             "keyword":keyword
         }
         expect_time = datetime.today() - timedelta(hours=8)
-        if requests.get(check_exist_url+title).json() == []:
+        if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
             else:
@@ -357,20 +356,20 @@ def get_ltn_news(keyword):
             "keyword":keyword
         }
         expect_time = datetime.today() - timedelta(hours=8)
-        if requests.get(check_exist_url+title).json() == []:
+        if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
             else:
                 break
 if __name__ == "__main__":
-    get_udn_news.delay('基進')
-    get_apple_news.delay('基進')
-    get_setn_news.delay('基進')
-    get_ettoday_news.delay('基進')
-    get_TVBS_news.delay('基進')
-    get_china_news.delay('基進')
-    get_storm_news.delay('基進')
-    get_ttv_news.delay('基進')
-    get_ftv_news.delay('基進')
-    get_ltn_news.delay('基進')
-    get_ltn_news.delay('基進')
+    get_udn_news.delay('台灣')
+    get_apple_news.delay('台灣')
+    get_setn_news.delay('台灣')
+    get_ettoday_news.delay('台灣')
+    get_TVBS_news.delay('台灣')
+    get_china_news.delay('台灣')
+    get_storm_news.delay('台灣')
+    get_ttv_news.delay('台灣')
+    get_ftv_news.delay('台灣')
+    get_ltn_news.delay('台灣')
+    get_ltn_news.delay('台灣')
