@@ -241,9 +241,9 @@ def get_ttv_news(keyword):
     url = 'https://news.ttv.com.tw/search/' + urllib.parse.quote_plus(keyword)
     res = requests.get(url=url,headers=headers)
     soup = BeautifulSoup(res.text, 'html.parser')
-    titles = soup.select('div.title')
+    titles = soup.select('ul > li > a.clearfix > div.content > div.title')
     urls = soup.select('ul > li > a.clearfix')
-    publishes = soup.select('div.time')
+    publishes = soup.select('ul > li > a.clearfix > div.content > div.time')
     publisher = '台視新聞網'
     for i in range(len(urls)):
         url = 'https://news.ttv.com.tw/'+urls[i].get('href')
