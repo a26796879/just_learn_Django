@@ -244,13 +244,11 @@ def get_ttv_news(keyword):
     titles = soup.select('div.title')
     urls = soup.select('ul > li > a.clearfix')
     publishes = soup.select('div.time')
-    images = soup.select('img[alt=""]')
     publisher = '台視新聞網'
     for i in range(len(urls)):
         url = 'https://news.ttv.com.tw/'+urls[i].get('href')
-        title = titles[i+2].text
+        title = titles[i].text.replace('\u3000',' ') #將全形space取代為半形space
         publish = publishes[i].text
-        image = images[i].get('src')
         dateFormatter = "%Y/%m/%d %H:%M:%S"
         published_date = datetime.strptime(publish, dateFormatter)
         data = {
@@ -334,20 +332,23 @@ def get_ltn_news(keyword):
     url = 'https://search.ltn.com.tw/list?keyword=' + urllib.parse.quote_plus(keyword)
     res = requests.get(url=url,headers=headers)
     soup = BeautifulSoup(res.text, 'html.parser')
-    tit_tag = soup.find_all("a", class_="tit")
+    titles = soup.find_all("a", class_="tit")
     images = soup.select('img.lazy_imgs')
     publisher = '自由時報電子報'
-    for i in range(len(tit_tag)):
-        title = tit_tag[i]['title']
-        url = tit_tag[i]['href']
-        res = requests.get(url=url,headers=headers)
+    for i in range(len(titles)):
+        title = titles[i]['title'].replace('\u3000',' ') #將全形space取代為半形space
+        url = titles[i]['href']
+        res = requests.get(url=url,headers=headers, timeout = 10)
         soup = BeautifulSoup(res.text, 'html.parser')
-        publish = soup.select('span.time')[0].text.replace('\n    ','')
-        if publish == "":
-            publish = soup.select('span.time')[1].text.replace('\n    ','')
-        image = images[i].get('data-src')
+        if 'health.ltn' in url:
+            publish = soup.select('span.time')[1].text.replace('\n    ','').replace('\r','')
+        elif 'ent.ltn' in url:
+            publish = soup.select('time.time')[0].text.replace('\n    ','').replace('\r','')
+        else:
+            publish = soup.select('span.time')[0].text.replace('\n    ','').replace('\r','')
         dateFormatter = "%Y/%m/%d %H:%M"
         published_date = datetime.strptime(publish, dateFormatter)
+        expect_time = datetime.today() - timedelta(hours=1)
         data = {
             "name":title,
             "publisher":publisher,
