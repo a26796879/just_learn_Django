@@ -5,7 +5,8 @@ services:
         build: .
         container_name: django
         command: >
-            bash -c "python3 manage.py migrate
+            bash -c "python3 manage.py makemigrations
+            && python3 manage.py migrate
             && python3 manage.py runserver 0.0.0.0:8000"
         volumes:
             - .:/usr/src/app/
@@ -21,8 +22,7 @@ services:
     celery:
         build: .
         command: >
-            bash -c 'celery -A just_learn flower -l INFO
-            && celery control shutdown'
+            bash -c 'celery -A just_learn flower -l INFO'
         volumes:
             - .:/usr/src/app
         ports:
