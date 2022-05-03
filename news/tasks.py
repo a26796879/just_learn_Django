@@ -164,7 +164,6 @@ def get_TVBS_news(keyword):
         image = images[i].get('data-original')
         dateFormatter = "%Y/%m/%d %H:%M"
         published_date = datetime.strptime(publish, dateFormatter)
-        expect_time = datetime.today() - timedelta(hours=8)
         data = {
             "name":title,
             "publisher":publisher,
@@ -344,11 +343,12 @@ def get_ltn_news(keyword):
             publish = soup.select('span.time')[1].text.replace('\n    ','').replace('\r','')
         elif 'ent.ltn' in url:
             publish = soup.select('time.time')[0].text.replace('\n    ','').replace('\r','')
+        elif 'istyle' in url:
+            publish = soup.select('span.time')[0].text.split('\n')[0].replace('\n    ','').replace('\r','').replace('  ','')
         else:
             publish = soup.select('span.time')[0].text.replace('\n    ','').replace('\r','')
         dateFormatter = "%Y/%m/%d %H:%M"
         published_date = datetime.strptime(publish, dateFormatter)
-        expect_time = datetime.today() - timedelta(hours=1)
         data = {
             "name":title,
             "publisher":publisher,
@@ -372,5 +372,5 @@ if __name__ == "__main__":
     get_storm_news.delay('台灣')
     get_ttv_news.delay('台灣')
     get_ftv_news.delay('台灣')
-    get_ltn_news.delay('台灣')
+    get_cna_news.delay('台灣')
     get_ltn_news.delay('台灣')
