@@ -340,7 +340,7 @@ def get_ltn_news(keyword):
         url = titles[i]['href']
         res = requests.get(url=url,headers=headers, timeout = 10)
         soup = BeautifulSoup(res.text, 'html.parser')
-        if 'health.ltn' in url:
+        if 'health.ltn' in url or 'sports.ltn' in url:
             publish = soup.select('span.time')[1].text.replace('\n    ','').replace('\r','')
         elif 'ent.ltn' in url:
             publish = soup.select('time.time')[0].text.replace('\n    ','').replace('\r','')
