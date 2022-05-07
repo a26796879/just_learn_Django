@@ -26,7 +26,18 @@ steps:
     when:                                # 當觸發條件為 develop 分支時會執行的動作
       branch:
       - develop
-
+  
+steps:
+  - name: just_learn_django                             # 事件一：可自行定義的名稱
+    image: a26796879/just_learn_django:latest    # 使用 neil605164/drone-plugin-ex  容器
+    settings:
+      hello: "Wow"                       # 提供 hello 值為「Wow」，若不提供則為「default」值
+    commands:                            # 驗證是否有接收到帶入的值
+    - echo $PLUGIN_HELLO                 
+    when:                                # 當觸發條件為 master 分支時會執行的動作
+      branch:
+      - master
+      
 trigger:     # 觸發 pipeline 條件，分支為 master，且進行 push 行為
   branch: 
   - master
