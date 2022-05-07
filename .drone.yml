@@ -1,6 +1,8 @@
-pipeline:
-  build:
-    image: node:8.11.3-alpine
-    commands:
-      - npm install
-      - npm test
+## Drone 1.0 版本寫法
+kind: pipeline
+type: docker      # 在 Docker 內部執行管道命令
+name: clone       # 可自行定義的名稱
+
+steps:
+  - name: build-django                   # 事件一：可自行定義的名稱
+    image: just_learn_django_django
