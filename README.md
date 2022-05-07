@@ -13,3 +13,4 @@ Learn things about Django
 3. 使用 Redis 作為 result_backend  
 4. 使用 Flower 進行 workers 管理  
 5. 使用 docker 打包，並部署在GCE
+6. 新增 Drone 進行 CI/CD
