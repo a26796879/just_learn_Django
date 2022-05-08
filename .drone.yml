@@ -62,8 +62,8 @@ steps:
         - ls
         - cd just_learn_Django
         - docker-compose stop
-        - git reset --hard
-        - git pull
+        - sudo git reset --hard
+        - sudo git pull
         - docker pull a26796879/just_learn_django
         - docker pull a26796879/just_learn_celery
         - docker-compose up -d
