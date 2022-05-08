@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.8-slim
 
 # Generate locale C.UTF-8 for postgres and general locale data
 ENV LANG C.UTF-8
