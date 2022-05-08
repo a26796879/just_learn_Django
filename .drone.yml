@@ -51,7 +51,7 @@ steps:
 #     auto_tag: true
 #     auto_tag_suffix: drone-build
   - name: deploy-services
-    image: ssh
+    image: appleboy/drone-ssh
     settings:
       username: user
       host: 34.105.13.75
