@@ -11,6 +11,6 @@ Learn things about Django
 1. 使用 Django Rest Framework 建立Restful API：http://backend.myvnc.com  
 2. 建置 RabbitMQ & Celery 以及 3台 workers進行分散式爬取新聞資料  
 3. 使用 Redis 作為 result_backend  
-4. 使用 Flower 進行 workers 管理  
-5. 使用 docker 打包，並部署在GCE
-6. 新增 Drone 進行 CI/CD
+4. 使用 Flower 進行 workers 管理：http://backend.myvnc.com:5555    
+6. 使用 docker 打包，並部署在GCE
+7. 新增 Drone 進行 CI/CD
