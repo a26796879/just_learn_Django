@@ -30,47 +30,42 @@ steps:
       local: false
 
 steps:
-- name: publish-just_learn_django
-  image: plugins/docker
-  settings:
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    repo: a26796879/just_learn_django
-    auto_tag: true
-    auto_tag_suffix: drone-build
+  - name: publish-just_learn_django
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      repo: a26796879/just_learn_django
+      auto_tag: true
+      auto_tag_suffix: drone-build
 
-- name: publish-just_learn_celery
-  image: plugins/docker
-  settings:
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    repo: a26796879/just_learn_celery
-    auto_tag: true
-    auto_tag_suffix: drone-build
+  - name: publish-just_learn_celery
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      repo: a26796879/just_learn_celery
+      auto_tag: true
+      auto_tag_suffix: drone-build
 
-kind: pipeline
-type: docker    # 在docker環境中執行
-name: deploy    # 自定義pipleline名稱
-
-steps:
-- name: deploy-services
-  image: appleboy/drone-ssh
-  settings:
-    username: user
-    host:
-      from_secret: service_host
-    key:
-      from_secret: id_rsa
-    script:
-      - ls
-      - cd just_learn_Django
-      - docker-compose stop
-      - sudo git reset --hard
-      - sudo git pull
-      - docker pull a26796879/just_learn_django
-      - docker pull a26796879/just_learn_celery
-      - docker-compose up -d
+  - name: deploy-services
+    image: appleboy/drone-ssh
+    settings:
+      username: user
+      host:
+        from_secret: service_host
+      key:
+        from_secret: id_rsa
+      script:
+        - ls
+        - cd just_learn_Django
+        - docker-compose stop
+        - sudo git reset --hard
+        - sudo git pull
+        - docker pull a26796879/just_learn_django
+        - docker pull a26796879/just_learn_celery
+        - docker-compose up -d
