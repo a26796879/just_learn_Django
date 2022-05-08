@@ -29,14 +29,6 @@ steps:
       #- develop
       local: false
 
-kind: pipeline
-type: docker #在docker環境中執行
-name: buildup-images #自定義pipleline名稱
- 
-platform:
-  os: linux
-  arch: amd64
- 
 steps:
 - name: publish-just_learn_django
   image: plugins/docker
