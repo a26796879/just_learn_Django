@@ -54,12 +54,13 @@ steps:
     image: appleboy/drone-ssh
     settings:
       username: user
-      host: 34.105.13.75
-        #from_secret: service_host
+      host:
+        from_secret: service_host
       key:
         from_secret: id_rsa
       script:
-        - ls
+        - sudo git reset --hard
+          sudo git pull
 #   - name: start-services
 #     image: appleboy/drone-ssh
 #     settings:
