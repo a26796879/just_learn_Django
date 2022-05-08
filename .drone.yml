@@ -32,24 +32,40 @@ steps:
 
 kind: pipeline
 type: docker #在docker環境中執行
-name: test #自定義pipleline名稱
+name: buildup-images #自定義pipleline名稱
  
 platform:
   os: linux
   arch: amd64
  
 steps:
+- name: publish-just_learn_django
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: a26796879/just_learn_django
+    auto_tag: true
+    auto_tag_suffix: drone-build
 
-# - name: publish  
-#   image: plugins/docker
-#   settings:
-#     username:
-#       from_secret: docker_username
-#     password:
-#       from_secret: docker_password
-#     repo: a26796879/just_learn_django
-#     auto_tag: true
-#     auto_tag_suffix: drone-build
+- name: publish-just_learn_celery
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: a26796879/just_learn_celery
+    auto_tag: true
+    auto_tag_suffix: drone-build
+
+kind: pipeline
+type: docker    # 在docker環境中執行
+name: deploy    # 自定義pipleline名稱
+
+steps:
   - name: deploy-services
     image: appleboy/drone-ssh
     settings:
@@ -67,15 +83,3 @@ steps:
         - docker pull a26796879/just_learn_django
         - docker pull a26796879/just_learn_celery
         - docker-compose up -d
-        
-#   - name: start-services
-#     image: appleboy/drone-ssh
-#     settings:
-#       host:
-#         from_secret: service_host
-#       ssh_key:
-#         from_secret: ssh_key
-#       script:
-#         - ls
-#         #- docker-compose stop
-#         #- docker-compose up -d
