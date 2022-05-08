@@ -62,6 +62,7 @@ steps:
         - docker-compose stop
         - docker pull a26796879/just_learn_django
         - docker pull a26796879/just_learn_celery
+        - cd just_learn_django
         - docker-compose up -d
 #   - name: start-services
 #     image: appleboy/drone-ssh
