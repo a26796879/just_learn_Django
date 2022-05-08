@@ -54,10 +54,9 @@ steps:
     image: appleboy/drone-scp
     settings:
       username: user
-    host: 
-      - 34.105.13.75
+    host: 34.105.13.75
       ssh_key:
-        from_secret: id-rsa
+        from_secret: ssh_key
       target:
         - /root/apps/
       source:
@@ -66,10 +65,9 @@ steps:
   - name: start-services
     image: appleboy/drone-ssh
     settings:
-    host: 
-      - 34.105.13.75
+    host: 34.105.13.75
       ssh_key:
-        from_secret: id-rsa
+        from_secret: ssh_key
       script:
         - ls
         #- docker-compose stop
