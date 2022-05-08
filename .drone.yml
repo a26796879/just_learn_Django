@@ -54,7 +54,8 @@ steps:
     image: appleboy/drone-scp
     settings:
       username: user
-    host: 34.105.13.75
+      host:
+        from_secret: service_host
       ssh_key:
         from_secret: ssh_key
       target:
@@ -65,7 +66,8 @@ steps:
   - name: start-services
     image: appleboy/drone-ssh
     settings:
-    host: 34.105.13.75
+      host:
+        from_secret: service_host
       ssh_key:
         from_secret: ssh_key
       script:
