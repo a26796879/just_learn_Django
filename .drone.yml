@@ -55,7 +55,7 @@ steps:
     settings:
       username: user
     host: 
-      -  34.105.13.75
+      - 34.105.13.75
       ssh_key:
         from_secret: id-rsa
       target:
@@ -67,7 +67,7 @@ steps:
     image: appleboy/drone-ssh
     settings:
     host: 
-      -  34.105.13.75
+      - 34.105.13.75
       ssh_key:
         from_secret: id-rsa
       script:
