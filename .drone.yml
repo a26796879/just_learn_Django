@@ -56,21 +56,18 @@ steps:
       username: user
       host: 34.105.13.75
         #from_secret: service_host
-      key: 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
-        #from_secret: ssh_key
-      target:
-        - /root/apps/
-      source:
-        - ./services
-
-  - name: start-services
-    image: appleboy/drone-ssh
-    settings:
-      host:
-        from_secret: service_host
-      ssh_key:
-        from_secret: ssh_key
+      key:
+        from_secret: id_rsa
       script:
         - ls
-        #- docker-compose stop
-        #- docker-compose up -d
+#   - name: start-services
+#     image: appleboy/drone-ssh
+#     settings:
+#       host:
+#         from_secret: service_host
+#       ssh_key:
+#         from_secret: ssh_key
+#       script:
+#         - ls
+#         #- docker-compose stop
+#         #- docker-compose up -d
