@@ -71,3 +71,4 @@ steps:
       - docker pull a26796879/just_learn_django
       - docker pull a26796879/just_learn_celery
       - docker-compose up -d
+      
