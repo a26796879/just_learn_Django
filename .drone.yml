@@ -30,29 +30,29 @@ steps:
       local: false
 
 steps:
-- name: publish-just_learn_django
-  image: plugins/docker
-  settings:
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    cache_from: "a26796879/just_learn_django:latest"
-    repo: a26796879/just_learn_django
-    auto_tag: true
-    auto_tag_suffix: drone-build
+# - name: publish-just_learn_django       使用docker push to hub機制太花時間
+#   image: plugins/docker                 也耗費網路傳輸流量，改採 CD docker-compose build . 方式處理
+#   settings:
+#     username:
+#       from_secret: docker_username
+#     password:
+#       from_secret: docker_password
+#     cache_from: "a26796879/just_learn_django:latest"
+#     repo: a26796879/just_learn_django
+#     auto_tag: true
+#     auto_tag_suffix: drone-build
 
-- name: publish-just_learn_celery
-  image: plugins/docker
-  settings:
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    cache_from: "a26796879/just_learn_celery:latest"
-    repo: a26796879/just_learn_celery
-    auto_tag: true
-    auto_tag_suffix: drone-build
+# - name: publish-just_learn_celery
+#   image: plugins/docker
+#   settings:
+#     username:
+#       from_secret: docker_username
+#     password:
+#       from_secret: docker_password
+#     cache_from: "a26796879/just_learn_celery:latest"
+#     repo: a26796879/just_learn_celery
+#     auto_tag: true
+#     auto_tag_suffix: drone-build
 
 - name: deploy-services
   image: appleboy/drone-ssh
@@ -68,7 +68,8 @@ steps:
       - docker-compose stop
       - sudo git reset --hard
       - sudo git pull
-      - docker pull a26796879/just_learn_django
-      - docker pull a26796879/just_learn_celery
+      - docker-compose build
+      #- docker pull a26796879/just_learn_django
+      #- docker pull a26796879/just_learn_celery
       - docker-compose up -d
       
