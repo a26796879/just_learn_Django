@@ -37,7 +37,7 @@ steps:
       from_secret: docker_username
     password:
       from_secret: docker_password
-    cache_from: a26796879/just_learn_django
+    cache_from: "a26796879/just_learn_django:latest"
     repo: a26796879/just_learn_django
     auto_tag: true
     auto_tag_suffix: drone-build
@@ -49,7 +49,7 @@ steps:
       from_secret: docker_username
     password:
       from_secret: docker_password
-    cache_from: a26796879/just_learn_celery
+    cache_from: "a26796879/just_learn_celery:latest"
     repo: a26796879/just_learn_celery
     auto_tag: true
     auto_tag_suffix: drone-build
