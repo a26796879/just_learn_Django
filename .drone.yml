@@ -1,73 +1,74 @@
----
-{
-   "kind": "pipeline",
-   "name": "publish-services_just_learn_django",
-   "steps": [
-      {
-         "image": "plugins/docker",
-         "name": "deploy-services",
-         "settings": {
-            "auto_tag": true,
-            "cache_from": "a26796879/just_learn_django",
-            "password": {
-               "from_secret": "docker_password"
-            },
-            "repo": "a26796879/just_learn_django",
-            "username": {
-               "from_secret": "docker_username"
-            }
-         }
-      }
-   ]
-}
----
-{
-   "kind": "pipeline",
-   "name": "publish-services_just_learn_celery",
-   "steps": [
-      {
-         "image": "plugins/docker",
-         "name": "deploy-services",
-         "settings": {
-            "auto_tag": true,
-            "cache_from": "a26796879/just_learn_celery",
-            "password": {
-               "from_secret": "docker_password"
-            },
-            "repo": "a26796879/just_learn_celery",
-            "username": {
-               "from_secret": "docker_username"
-            }
-         }
-      }
-   ]
-}
----
+# ---
+# {
+#    "kind": "pipeline",
+#    "name": "publish-services_just_learn_django",
+#    "steps": [
+#       {
+#          "image": "plugins/docker",
+#          "name": "deploy-services",
+#          "settings": {
+#             "auto_tag": true,
+#             "cache_from": "a26796879/just_learn_django",
+#             "password": {
+#                "from_secret": "docker_password"
+#             },
+#             "repo": "a26796879/just_learn_django",
+#             "username": {
+#                "from_secret": "docker_username"
+#             }
+#          }
+#       }
+#    ]
+# }
+# ---
+# {
+#    "kind": "pipeline",
+#    "name": "publish-services_just_learn_celery",
+#    "steps": [
+#       {
+#          "image": "plugins/docker",
+#          "name": "deploy-services",
+#          "settings": {
+#             "auto_tag": true,
+#             "cache_from": "a26796879/just_learn_celery",
+#             "password": {
+#                "from_secret": "docker_password"
+#             },
+#             "repo": "a26796879/just_learn_celery",
+#             "username": {
+#                "from_secret": "docker_username"
+#             }
+#          }
+#       }
+#    ]
+# }
+# ---
 {
    "kind": "pipeline",
    "name": "publish_services",
    "steps": [
       {
-         "commands": [
-            "ls",
-            "cd just_learn_Django",
-            "docker-compose stop",
-            "sudo git reset --hard",
-            "sudo git pull",
-            "sudo docker-compose build",
-            "docker pull a26796879/just_learn_django",
-            "docker pull a26796879/just_learn_celery",
-            "docker-compose up -d"
-         ],
          "image": "appleboy/drone-ssh",
          "name": "deploy-services",
          "settings": {
+            "commands": [
+               "ls",
+               "cd just_learn_Django",
+               "docker-compose stop",
+               "sudo git reset --hard",
+               "sudo git pull",
+               "sudo docker-compose build",
+               "docker pull a26796879/just_learn_django",
+               "docker pull a26796879/just_learn_celery",
+               "docker-compose up -d"
+            ],
             "host": {
                "from_secret": "service_host"
             },
             "key": {
                "from_secret": "id_rsa"
-            }
+            },
+            "username": "user"
          }
       }
    ]
@@ -78,20 +79,21 @@
    "name": "publish_to_workers_celery1_host",
    "steps": [
       {
-         "commands": [
-            "ls",
-            "sudo git reset --hard",
-            "sudo git pull"
-         ],
          "image": "appleboy/drone-ssh",
          "name": "deploy-workers_celery1_host",
          "settings": {
+            "commands": [
+               "ls",
+               "sudo git reset --hard",
+               "sudo git pull"
+            ],
             "host": {
                "from_secret": "celery1_host"
             },
             "key": {
                "from_secret": "id_rsa"
-            }
+            },
+            "username": "user"
          }
       }
    ]
@@ -102,20 +104,21 @@
    "name": "publish_to_workers_celery2_host",
    "steps": [
       {
-         "commands": [
-            "ls",
-            "sudo git reset --hard",
-            "sudo git pull"
-         ],
          "image": "appleboy/drone-ssh",
          "name": "deploy-workers_celery2_host",
          "settings": {
+            "commands": [
+               "ls",
+               "sudo git reset --hard",
+               "sudo git pull"
+            ],
             "host": {
                "from_secret": "celery2_host"
             },
             "key": {
                "from_secret": "id_rsa"
-            }
+            },
+            "username": "user"
          }
       }
    ]
@@ -126,20 +129,21 @@
    "name": "publish_to_workers_celery3_host",
    "steps": [
       {
-         "commands": [
-            "ls",
-            "sudo git reset --hard",
-            "sudo git pull"
-         ],
          "image": "appleboy/drone-ssh",
          "name": "deploy-workers_celery3_host",
          "settings": {
+            "commands": [
+               "ls",
+               "sudo git reset --hard",
+               "sudo git pull"
+            ],
             "host": {
                "from_secret": "celery3_host"
             },
             "key": {
                "from_secret": "id_rsa"
-            }
+            },
+            "username": "user"
          }
       }
    ]
