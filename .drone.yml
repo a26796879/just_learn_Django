@@ -84,6 +84,7 @@
          "settings": {
             "commands": [
                "ls",
+               "cd just_learn_Django",
                "sudo git reset --hard",
                "sudo git pull"
             ],
@@ -109,6 +110,7 @@
          "settings": {
             "commands": [
                "ls",
+               "cd just_learn_Django",
                "sudo git reset --hard",
                "sudo git pull"
             ],
@@ -134,6 +136,7 @@
          "settings": {
             "commands": [
                "ls",
+               "cd just_learn_Django",
                "sudo git reset --hard",
                "sudo git pull"
             ],
