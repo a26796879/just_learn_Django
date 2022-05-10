@@ -1,6 +1,64 @@
 ---
 {
    "kind": "pipeline",
+   "name": "publish-services",
+   "steps": [
+      {
+         "auto_tag": true,
+         "cache_from": "a26796879/just_learn_django:drone-build",
+         "image": "plugins/docker",
+         "name": "deploy-workers",
+         "repo": "a26796879/just_learn_django",
+         "settings": {
+            "password": {
+               "from_secret": "docker_password"
+            },
+            "username": {
+               "from_secret": "docker_username"
+            }
+         },
+         "when": {
+            "event": {
+               "exclude": [
+                  "push"
+               ]
+            }
+         }
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "publish-services",
+   "steps": [
+      {
+         "auto_tag": true,
+         "cache_from": "a26796879/just_learn_celery:drone-build",
+         "image": "plugins/docker",
+         "name": "deploy-workers",
+         "repo": "a26796879/just_learn_celery",
+         "settings": {
+            "password": {
+               "from_secret": "docker_password"
+            },
+            "username": {
+               "from_secret": "docker_username"
+            }
+         },
+         "when": {
+            "event": {
+               "exclude": [
+                  "push"
+               ]
+            }
+         }
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
    "name": "publish_services",
    "steps": [
       {
@@ -38,7 +96,7 @@
 ---
 {
    "kind": "pipeline",
-   "name": "publish_to_workers",
+   "name": "publish_to_workers_celery1_host",
    "steps": [
       {
          "commands": [
@@ -75,7 +133,7 @@
 ---
 {
    "kind": "pipeline",
-   "name": "publish_to_workers",
+   "name": "publish_to_workers_celery2_host",
    "steps": [
       {
          "commands": [
@@ -112,7 +170,7 @@
 ---
 {
    "kind": "pipeline",
-   "name": "publish_to_workers",
+   "name": "publish_to_workers_celery3_host",
    "steps": [
       {
          "commands": [
