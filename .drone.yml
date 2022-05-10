@@ -16,13 +16,6 @@
             "username": {
                "from_secret": "docker_username"
             }
-         },
-         "when": {
-            "event": {
-               "exclude": [
-                  "push"
-               ]
-            }
          }
       }
    ]
@@ -44,13 +37,6 @@
             },
             "username": {
                "from_secret": "docker_username"
-            }
-         },
-         "when": {
-            "event": {
-               "exclude": [
-                  "push"
-               ]
             }
          }
       }
@@ -82,13 +68,6 @@
             "key": {
                "from_secret": "id_rsa"
             }
-         },
-         "when": {
-            "event": {
-               "exclude": [
-                  "push"
-               ]
-            }
          }
       }
    ]
@@ -118,13 +97,6 @@
             },
             "key": {
                "from_secret": "id_rsa"
-            }
-         },
-         "when": {
-            "event": {
-               "exclude": [
-                  "push"
-               ]
             }
          }
       }
@@ -156,13 +128,6 @@
             "key": {
                "from_secret": "id_rsa"
             }
-         },
-         "when": {
-            "event": {
-               "exclude": [
-                  "push"
-               ]
-            }
          }
       }
    ]
@@ -192,13 +157,6 @@
             },
             "key": {
                "from_secret": "id_rsa"
-            }
-         },
-         "when": {
-            "event": {
-               "exclude": [
-                  "push"
-               ]
             }
          }
       }
