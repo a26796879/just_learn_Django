@@ -66,6 +66,9 @@
                "sudo docker-compose build",
                "docker pull a26796879/just_learn_django",
                "docker pull a26796879/just_learn_celery",
+               "curl --location --request POST http://backend.myvnc.com:5555/api/worker/shutdown/celery@odoo --header Authorization: Basic dXNlcjE6cGFzc3dvcmQx",
+               "curl --location --request POST http://backend.myvnc.com:5555/api/worker/shutdown/celery@rabbitmq-server --header Authorization: Basic dXNlcjE6cGFzc3dvcmQx",
+               "curl --location --request POST http://backend.myvnc.com:5555/api/worker/shutdown/celery@celery --header Authorization: Basic dXNlcjE6cGFzc3dvcmQx",
                "docker-compose up -d"
             ],
             "username": "user"
@@ -92,7 +95,9 @@
                "ls",
                "cd just_learn_Django",
                "sudo git reset --hard",
-               "sudo git pull"
+               "sudo git pull",
+               "cd news",
+               "celery -A tasks worker -l INFO --detach"
             ],
             "username": "user"
          }
@@ -118,7 +123,9 @@
                "ls",
                "cd just_learn_Django",
                "sudo git reset --hard",
-               "sudo git pull"
+               "sudo git pull",
+               "cd news",
+               "celery -A tasks worker -l INFO --detach"
             ],
             "username": "user"
          }
@@ -144,7 +151,9 @@
                "ls",
                "cd just_learn_Django",
                "sudo git reset --hard",
-               "sudo git pull"
+               "sudo git pull",
+               "cd news",
+               "celery -A tasks worker -l INFO --detach"
             ],
             "username": "user"
          }
