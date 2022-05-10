@@ -1,7 +1,7 @@
 ---
 {
    "kind": "pipeline",
-   "name": "publish-services",
+   "name": "publish-services_just_learn_django",
    "steps": [
       {
          "auto_tag": true,
@@ -30,7 +30,7 @@
 ---
 {
    "kind": "pipeline",
-   "name": "publish-services",
+   "name": "publish-services_just_learn_celery",
    "steps": [
       {
          "auto_tag": true,
