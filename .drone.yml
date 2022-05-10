@@ -51,7 +51,13 @@
          "image": "appleboy/drone-ssh",
          "name": "deploy-services",
          "settings": {
-            "commands": [
+            "host": {
+               "from_secret": "service_host"
+            },
+            "key": {
+               "from_secret": "id_rsa"
+            },
+            "script": [
                "ls",
                "cd just_learn_Django",
                "docker-compose stop",
@@ -62,12 +68,6 @@
                "docker pull a26796879/just_learn_celery",
                "docker-compose up -d"
             ],
-            "host": {
-               "from_secret": "service_host"
-            },
-            "key": {
-               "from_secret": "id_rsa"
-            },
             "username": "user"
          }
       }
@@ -82,18 +82,18 @@
          "image": "appleboy/drone-ssh",
          "name": "deploy-workers_celery1_host",
          "settings": {
-            "commands": [
-               "ls",
-               "cd just_learn_Django",
-               "sudo git reset --hard",
-               "sudo git pull"
-            ],
             "host": {
                "from_secret": "celery1_host"
             },
             "key": {
                "from_secret": "id_rsa"
             },
+            "script": [
+               "ls",
+               "cd just_learn_Django",
+               "sudo git reset --hard",
+               "sudo git pull"
+            ],
             "username": "user"
          }
       }
@@ -108,18 +108,18 @@
          "image": "appleboy/drone-ssh",
          "name": "deploy-workers_celery2_host",
          "settings": {
-            "commands": [
-               "ls",
-               "cd just_learn_Django",
-               "sudo git reset --hard",
-               "sudo git pull"
-            ],
             "host": {
                "from_secret": "celery2_host"
             },
             "key": {
                "from_secret": "id_rsa"
             },
+            "script": [
+               "ls",
+               "cd just_learn_Django",
+               "sudo git reset --hard",
+               "sudo git pull"
+            ],
             "username": "user"
          }
       }
@@ -134,18 +134,18 @@
          "image": "appleboy/drone-ssh",
          "name": "deploy-workers_celery3_host",
          "settings": {
-            "commands": [
-               "ls",
-               "cd just_learn_Django",
-               "sudo git reset --hard",
-               "sudo git pull"
-            ],
             "host": {
                "from_secret": "celery3_host"
             },
             "key": {
                "from_secret": "id_rsa"
             },
+            "script": [
+               "ls",
+               "cd just_learn_Django",
+               "sudo git reset --hard",
+               "sudo git pull"
+            ],
             "username": "user"
          }
       }
