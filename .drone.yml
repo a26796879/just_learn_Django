@@ -40,7 +40,6 @@ steps:
     cache_from: "a26796879/just_learn_django:drone-build"
     repo: a26796879/just_learn_django
     auto_tag: true
-    auto_tag_suffix: drone-build
 
 - name: publish-just_learn_celery
   image: plugins/docker
@@ -52,7 +51,6 @@ steps:
     cache_from: "a26796879/just_learn_celery:drone-build"
     repo: a26796879/just_learn_celery
     auto_tag: true
-    auto_tag_suffix: drone-build
 
 - name: deploy-services
   image: appleboy/drone-ssh
