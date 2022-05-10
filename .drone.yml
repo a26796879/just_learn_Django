@@ -111,7 +111,7 @@
             "docker-compose up -d"
          ],
          "image": "appleboy/drone-ssh",
-         "name": "deploy-workers",
+         "name": "deploy-workers_celery1_host",
          "settings": {
             "host": {
                "from_secret": "celery1_host"
@@ -148,7 +148,7 @@
             "docker-compose up -d"
          ],
          "image": "appleboy/drone-ssh",
-         "name": "deploy-workers",
+         "name": "deploy-workers_celery2_host",
          "settings": {
             "host": {
                "from_secret": "celery2_host"
@@ -185,7 +185,7 @@
             "docker-compose up -d"
          ],
          "image": "appleboy/drone-ssh",
-         "name": "deploy-workers",
+         "name": "deploy-workers_celery3_host",
          "settings": {
             "host": {
                "from_secret": "celery3_host"
