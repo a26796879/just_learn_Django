@@ -5,7 +5,7 @@
    "steps": [
       {
          "image": "plugins/docker",
-         "name": "deploy-workers",
+         "name": "deploy-services",
          "settings": {
             "auto_tag": true,
             "cache_from": "a26796879/just_learn_django",
@@ -27,7 +27,7 @@
    "steps": [
       {
          "image": "plugins/docker",
-         "name": "deploy-workers",
+         "name": "deploy-services",
          "settings": {
             "auto_tag": true,
             "cache_from": "a26796879/just_learn_celery",
@@ -50,6 +50,7 @@
       {
          "commands": [
             "ls",
+            "cd just_learn_Django",
             "docker-compose stop",
             "sudo git reset --hard",
             "sudo git pull",
@@ -79,14 +80,8 @@
       {
          "commands": [
             "ls",
-            "cd just_learn_Django",
-            "docker-compose stop",
             "sudo git reset --hard",
-            "sudo git pull",
-            "sudo docker-compose build",
-            "docker pull a26796879/just_learn_django",
-            "docker pull a26796879/just_learn_celery",
-            "docker-compose up -d"
+            "sudo git pull"
          ],
          "image": "appleboy/drone-ssh",
          "name": "deploy-workers_celery1_host",
@@ -109,14 +104,8 @@
       {
          "commands": [
             "ls",
-            "cd just_learn_Django",
-            "docker-compose stop",
             "sudo git reset --hard",
-            "sudo git pull",
-            "sudo docker-compose build",
-            "docker pull a26796879/just_learn_django",
-            "docker pull a26796879/just_learn_celery",
-            "docker-compose up -d"
+            "sudo git pull"
          ],
          "image": "appleboy/drone-ssh",
          "name": "deploy-workers_celery2_host",
@@ -139,14 +128,8 @@
       {
          "commands": [
             "ls",
-            "cd just_learn_Django",
-            "docker-compose stop",
             "sudo git reset --hard",
-            "sudo git pull",
-            "sudo docker-compose build",
-            "docker pull a26796879/just_learn_django",
-            "docker pull a26796879/just_learn_celery",
-            "docker-compose up -d"
+            "sudo git pull"
          ],
          "image": "appleboy/drone-ssh",
          "name": "deploy-workers_celery3_host",
