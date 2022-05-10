@@ -50,7 +50,6 @@
       {
          "commands": [
             "ls",
-            "cd just_learn_Django",
             "docker-compose stop",
             "sudo git reset --hard",
             "sudo git pull",
