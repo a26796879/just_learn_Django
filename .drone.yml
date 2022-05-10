@@ -5,7 +5,7 @@
    "steps": [
       {
          "auto_tag": true,
-         "cache_from": "a26796879/just_learn_django:drone-build",
+         "cache_from": "a26796879/just_learn_django",
          "image": "plugins/docker",
          "name": "deploy-workers",
          "repo": "a26796879/just_learn_django",
@@ -27,7 +27,7 @@
    "steps": [
       {
          "auto_tag": true,
-         "cache_from": "a26796879/just_learn_celery:drone-build",
+         "cache_from": "a26796879/just_learn_celery",
          "image": "plugins/docker",
          "name": "deploy-workers",
          "repo": "a26796879/just_learn_celery",
