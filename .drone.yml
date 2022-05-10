@@ -4,15 +4,15 @@
    "name": "publish-services_just_learn_django",
    "steps": [
       {
-         "auto_tag": true,
-         "cache_from": "a26796879/just_learn_django",
          "image": "plugins/docker",
          "name": "deploy-workers",
-         "repo": "a26796879/just_learn_django",
          "settings": {
+            "auto_tag": true,
+            "cache_from": "a26796879/just_learn_django",
             "password": {
                "from_secret": "docker_password"
             },
+            "repo": "a26796879/just_learn_django",
             "username": {
                "from_secret": "docker_username"
             }
@@ -26,15 +26,15 @@
    "name": "publish-services_just_learn_celery",
    "steps": [
       {
-         "auto_tag": true,
-         "cache_from": "a26796879/just_learn_celery",
          "image": "plugins/docker",
          "name": "deploy-workers",
-         "repo": "a26796879/just_learn_celery",
          "settings": {
+            "auto_tag": true,
+            "cache_from": "a26796879/just_learn_celery",
             "password": {
                "from_secret": "docker_password"
             },
+            "repo": "a26796879/just_learn_celery",
             "username": {
                "from_secret": "docker_username"
             }
@@ -162,4 +162,3 @@
       }
    ]
 }
-
