@@ -96,7 +96,7 @@
                "cd just_learn_Django",
                "sudo git reset --hard",
                "sudo git pull",
-               "cd news",
+               "cd ~/just_learn_Django/news/",
                "celery -A tasks worker -l INFO --detach"
             ],
             "username": "user"
@@ -124,7 +124,7 @@
                "cd just_learn_Django",
                "sudo git reset --hard",
                "sudo git pull",
-               "cd news",
+               "cd ~/just_learn_Django/news/",
                "celery -A tasks worker -l INFO --detach"
             ],
             "username": "user"
@@ -152,7 +152,7 @@
                "cd just_learn_Django",
                "sudo git reset --hard",
                "sudo git pull",
-               "cd news",
+               "cd ~/just_learn_Django/news/",
                "celery -A tasks worker -l INFO --detach"
             ],
             "username": "user"
