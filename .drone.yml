@@ -1,73 +1,148 @@
-kind: pipeline
-type: docker      # 在 Docker 內部執行管道命令
-name: clone       # 可自行定義的名稱
-
-steps:
-  # 事件一
-  - name: host                           # 事件一：可自行定義的名稱
-    image: alpine                        # 使用 alpine 容器
-    commands:                            # 預執行的 shell 指令，這邊印出 hosts 內容
-      - cat /etc/hosts
-    when:                                # 無論 clone 成功或失敗，都會跑該事件
-      status: [ success, failure ]
-      local: false
-  # 事件二
-  - name: echo                           # 事件二：可自行定義的名稱
-    image: plugins/git                   # 使用 plugins/git  容器
-    commands:                            # 預執行的 shell 指令，這邊印出 78523 內容
-    - echo "78523"
-    when:                                # 當觸發條件為 master 分支時會執行的動作
-      branch:
-      - master
-  # 事件三
-  - name: dev_action                     # 事件三：可自行定義的名稱
-    image: plugins/git                   # 使用 plugins/git  容器
-    commands:                            # 預執行的 shell 指令，這邊印出 111111 內容
-    - echo "111111"
-    when:                                # 當觸發條件為 develop 分支時會執行的動作
-      #branch:
-      #- develop
-      local: false
-
-steps:
-- name: publish-just_learn_django       #使用docker push to hub機制太花時間
-  image: plugins/docker                 #也耗費網路傳輸流量，改採 CD docker-compose build . 方式處理
-  settings:
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    cache_from: "a26796879/just_learn_django:drone-build"
-    repo: a26796879/just_learn_django
-    auto_tag: true
-
-- name: publish-just_learn_celery
-  image: plugins/docker
-  settings:
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    cache_from: "a26796879/just_learn_celery:drone-build"
-    repo: a26796879/just_learn_celery
-    auto_tag: true
-
-- name: deploy-services
-  image: appleboy/drone-ssh
-  settings:
-    username: user
-    host:
-      from_secret: service_host
-    key:
-      from_secret: id_rsa
-    script:
-      - ls
-      - cd just_learn_Django
-      - docker-compose stop
-      - sudo git reset --hard
-      - sudo git pull
-      - sudo docker-compose build
-      - docker pull a26796879/just_learn_django
-      - docker pull a26796879/just_learn_celery
-      - docker-compose up -d
-      
+---
+{
+   "kind": "pipeline",
+   "name": "publish_services",
+   "steps": [
+      {
+         "commands": [
+            "ls",
+            "cd just_learn_Django",
+            "docker-compose stop",
+            "sudo git reset --hard",
+            "sudo git pull",
+            "sudo docker-compose build",
+            "docker pull a26796879/just_learn_django",
+            "docker pull a26796879/just_learn_celery",
+            "docker-compose up -d"
+         ],
+         "image": "appleboy/drone-ssh",
+         "name": "deploy-services",
+         "settings": {
+            "host": {
+               "from_secret": "service_host"
+            },
+            "key": {
+               "from_secret": "id_rsa"
+            }
+         },
+         "when": {
+            "event": {
+               "exclude": [
+                  "push"
+               ]
+            }
+         }
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "publish_to_workers",
+   "steps": [
+      {
+         "commands": [
+            "ls",
+            "cd just_learn_Django",
+            "docker-compose stop",
+            "sudo git reset --hard",
+            "sudo git pull",
+            "sudo docker-compose build",
+            "docker pull a26796879/just_learn_django",
+            "docker pull a26796879/just_learn_celery",
+            "docker-compose up -d"
+         ],
+         "image": "appleboy/drone-ssh",
+         "name": "deploy-workers",
+         "settings": {
+            "host": {
+               "from_secret": "celery1_host"
+            },
+            "key": {
+               "from_secret": "id_rsa"
+            }
+         },
+         "when": {
+            "event": {
+               "exclude": [
+                  "push"
+               ]
+            }
+         }
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "publish_to_workers",
+   "steps": [
+      {
+         "commands": [
+            "ls",
+            "cd just_learn_Django",
+            "docker-compose stop",
+            "sudo git reset --hard",
+            "sudo git pull",
+            "sudo docker-compose build",
+            "docker pull a26796879/just_learn_django",
+            "docker pull a26796879/just_learn_celery",
+            "docker-compose up -d"
+         ],
+         "image": "appleboy/drone-ssh",
+         "name": "deploy-workers",
+         "settings": {
+            "host": {
+               "from_secret": "celery2_host"
+            },
+            "key": {
+               "from_secret": "id_rsa"
+            }
+         },
+         "when": {
+            "event": {
+               "exclude": [
+                  "push"
+               ]
+            }
+         }
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "publish_to_workers",
+   "steps": [
+      {
+         "commands": [
+            "ls",
+            "cd just_learn_Django",
+            "docker-compose stop",
+            "sudo git reset --hard",
+            "sudo git pull",
+            "sudo docker-compose build",
+            "docker pull a26796879/just_learn_django",
+            "docker pull a26796879/just_learn_celery",
+            "docker-compose up -d"
+         ],
+         "image": "appleboy/drone-ssh",
+         "name": "deploy-workers",
+         "settings": {
+            "host": {
+               "from_secret": "celery3_host"
+            },
+            "key": {
+               "from_secret": "id_rsa"
+            }
+         },
+         "when": {
+            "event": {
+               "exclude": [
+                  "push"
+               ]
+            }
+         }
+      }
+   ]
+}
