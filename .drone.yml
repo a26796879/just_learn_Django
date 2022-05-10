@@ -1,48 +1,48 @@
-# ---
-# {
-#    "kind": "pipeline",
-#    "name": "publish-services_just_learn_django",
-#    "steps": [
-#       {
-#          "image": "plugins/docker",
-#          "name": "deploy-services",
-#          "settings": {
-#             "auto_tag": true,
-#             "cache_from": "a26796879/just_learn_django",
-#             "password": {
-#                "from_secret": "docker_password"
-#             },
-#             "repo": "a26796879/just_learn_django",
-#             "username": {
-#                "from_secret": "docker_username"
-#             }
-#          }
-#       }
-#    ]
-# }
-# ---
-# {
-#    "kind": "pipeline",
-#    "name": "publish-services_just_learn_celery",
-#    "steps": [
-#       {
-#          "image": "plugins/docker",
-#          "name": "deploy-services",
-#          "settings": {
-#             "auto_tag": true,
-#             "cache_from": "a26796879/just_learn_celery",
-#             "password": {
-#                "from_secret": "docker_password"
-#             },
-#             "repo": "a26796879/just_learn_celery",
-#             "username": {
-#                "from_secret": "docker_username"
-#             }
-#          }
-#       }
-#    ]
-# }
-# ---
+---
+{
+   "kind": "pipeline",
+   "name": "publish-services_just_learn_django",
+   "steps": [
+      {
+         "image": "plugins/docker",
+         "name": "deploy-services",
+         "settings": {
+            "auto_tag": true,
+            "cache_from": "a26796879/just_learn_django",
+            "password": {
+               "from_secret": "docker_password"
+            },
+            "repo": "a26796879/just_learn_django",
+            "username": {
+               "from_secret": "docker_username"
+            }
+         }
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "publish-services_just_learn_celery",
+   "steps": [
+      {
+         "image": "plugins/docker",
+         "name": "deploy-services",
+         "settings": {
+            "auto_tag": true,
+            "cache_from": "a26796879/just_learn_celery",
+            "password": {
+               "from_secret": "docker_password"
+            },
+            "repo": "a26796879/just_learn_celery",
+            "username": {
+               "from_secret": "docker_username"
+            }
+         }
+      }
+   ]
+}
+---
 {
    "kind": "pipeline",
    "name": "publish_services",
