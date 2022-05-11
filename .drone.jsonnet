@@ -12,8 +12,8 @@ local push_docker(repo) = {
         cache_from: "a26796879/"+ repo,
         repo: "a26796879/" + repo,
         auto_tag: true
+        },
       },
-    },
     ],    
 };
 
@@ -74,5 +74,5 @@ local publish_workers(host,celery_name,Authorization) = {
     publish_services,
     publish_workers("celery1_host","celery@odoo'",Authorization),
     publish_workers("celery2_host","celery@rabbitmq-server'",Authorization),
-    publish_workers("celery3_host","celery@celery'",Authorization),
+    publish_workers("celery3_host","celery@celery'",Authorization)
 ]
