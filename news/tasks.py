@@ -362,6 +362,11 @@ def get_ltn_news(keyword):
                 requests.post(post_api_url,data=data)
             else:
                 break
+            
+@app.task
+def test():
+    return 'Good'
+
 if __name__ == "__main__":
     get_udn_news.delay('台灣')
     get_apple_news.delay('台灣')
