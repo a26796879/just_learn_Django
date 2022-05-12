@@ -54,13 +54,12 @@ local publish_workers(host,celery_name,Authorization) = {
         key: { "from_secret": "id_rsa" },
         username: "user",
         script: [
-            "curl --location --request POST "+celery_shutdown_url +celery_name+ " --header "+Authorization,
             "ls",
             "cd just_learn_Django",
             "sudo git reset --hard",
             "sudo git pull",
-            "cd ~/just_learn_Django/news/",
-            "python3 -m celery -A tasks worker -l INFO --detach"
+            "curl --location --request POST "+celery_shutdown_url +celery_name+ " --header "+Authorization,
+            "python3 -m celery -A news.tasks worker -l INFO --detach"
         ],
       }
     },

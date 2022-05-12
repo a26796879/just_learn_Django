@@ -89,13 +89,12 @@
                "from_secret": "id_rsa"
             },
             "script": [
-               "curl --location --request POST 'http://backend.myvnc.com:5555/api/worker/shutdown/celery@odoo' --header 'Authorization: Basic dXNlcjE6cGFzc3dvcmQx'",
                "ls",
                "cd just_learn_Django",
                "sudo git reset --hard",
                "sudo git pull",
-               "cd ~/just_learn_Django/news/",
-               "python3 -m celery -A tasks worker -l INFO --detach"
+               "curl --location --request POST 'http://backend.myvnc.com:5555/api/worker/shutdown/celery@odoo' --header 'Authorization: Basic dXNlcjE6cGFzc3dvcmQx'",
+               "python3 -m celery -A news.tasks worker -l INFO --detach"
             ],
             "username": "user"
          }
@@ -118,13 +117,12 @@
                "from_secret": "id_rsa"
             },
             "script": [
-               "curl --location --request POST 'http://backend.myvnc.com:5555/api/worker/shutdown/celery@rabbitmq-server' --header 'Authorization: Basic dXNlcjE6cGFzc3dvcmQx'",
                "ls",
                "cd just_learn_Django",
                "sudo git reset --hard",
                "sudo git pull",
-               "cd ~/just_learn_Django/news/",
-               "python3 -m celery -A tasks worker -l INFO --detach"
+               "curl --location --request POST 'http://backend.myvnc.com:5555/api/worker/shutdown/celery@rabbitmq-server' --header 'Authorization: Basic dXNlcjE6cGFzc3dvcmQx'",
+               "python3 -m celery -A news.tasks worker -l INFO --detach"
             ],
             "username": "user"
          }
@@ -147,13 +145,12 @@
                "from_secret": "id_rsa"
             },
             "script": [
-               "curl --location --request POST 'http://backend.myvnc.com:5555/api/worker/shutdown/celery@celery' --header 'Authorization: Basic dXNlcjE6cGFzc3dvcmQx'",
                "ls",
                "cd just_learn_Django",
                "sudo git reset --hard",
                "sudo git pull",
-               "cd ~/just_learn_Django/news/",
-               "python3 -m celery -A tasks worker -l INFO --detach"
+               "curl --location --request POST 'http://backend.myvnc.com:5555/api/worker/shutdown/celery@celery' --header 'Authorization: Basic dXNlcjE6cGFzc3dvcmQx'",
+               "python3 -m celery -A news.tasks worker -l INFO --detach"
             ],
             "username": "user"
          }
