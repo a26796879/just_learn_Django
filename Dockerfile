@@ -9,9 +9,6 @@ RUN apt-get update && \
         ca-certificates \
         python3-pip \
         curl \
-        dirmngr \
-        fonts-noto-cjk \
-        gnupg \
         libssl-dev \
         git \
         nano \
