@@ -1,4 +1,4 @@
-from celery import Celery
+from celery import Celery, shared_task
 import time
 import requests
 import urllib
@@ -13,12 +13,28 @@ headers = {
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36'
 }
 
-@app.task
+NEWS_TIME_LIMIT = 8
+
+class News:
+    def __init__(self,title,url,publisher,date) -> None:
+        self.title = title
+        self.url = url
+        self.publisher = publisher
+        self.date = date
+    def post_to_db(self):
+        pass
+
+# @app.on_after_configure.connect
+# def setup_periodic_tasks(sender, **kwargs):
+#     # Calls test('hello') every 10 seconds.
+#     sender.add_periodic_task(10.0, test.s('hello'), name='add every 10')
+    
+@shared_task
 def send_email(email, token):
     print ("sending email...")
     print ("you can saving a file or log a message here to verify it.")
 
-@app.task
+@shared_task
 def add(x, y):
     return x + y
 
@@ -58,7 +74,7 @@ def get_udn_news(keyword):
             "date":published_date,
             "keyword":keyword
         }
-        expect_time = datetime.today() - timedelta(hours=8)
+        expect_time = datetime.today() - timedelta(hours=NEWS_TIME_LIMIT)
         if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
@@ -82,7 +98,7 @@ def get_apple_news(keyword):
             "date":published_date,
             "keyword":keyword
         }
-        expect_time = datetime.today() - timedelta(hours=8)
+        expect_time = datetime.today() - timedelta(hours=NEWS_TIME_LIMIT)
         if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
@@ -96,13 +112,11 @@ def get_setn_news(keyword):
     titles = soup.select('div.newsimg-area-text-2')
     url_tag = soup.select("div.newsimg-area-info >  a.gt ")
     dates = soup.select('div.newsimg-date')
-    images = soup.select('img.lazy')
     publisher = '三立新聞網'
     for i in range(len(titles)):
         title = titles[i].text
         dateString = dates[i].text
         url = 'https://www.setn.com/' + url_tag[i].get('href').replace('&From=Search','')
-        image = images[i].get('data-original').replace('-L','-PH')
         dateFormatter = "%Y/%m/%d %H:%M"
         published_date = datetime.strptime(dateString, dateFormatter)
         data = {
@@ -112,7 +126,7 @@ def get_setn_news(keyword):
             "date":published_date,
             "keyword":keyword
         }
-        expect_time = datetime.today() - timedelta(hours=8)
+        expect_time = datetime.today() - timedelta(hours=NEWS_TIME_LIMIT)
         if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
@@ -125,13 +139,11 @@ def get_ettoday_news(keyword):
     soup = BeautifulSoup(res.text, 'html.parser')
     titles = soup.select('h2 > a')
     date = soup.select('span.date')
-    images = soup.select('img')
     publisher = 'ETtoday新聞雲'
     for i in range(len(titles)):
         title = titles[i].text
         url = titles[i].get('href')
         publish = date[i].text.split('/')[1].replace(' ','')
-        image = 'https:' + images[i].get('src').replace('/b','/d')
         dateFormatter = "%Y-%m-%d%H:%M)"
         published_date = datetime.strptime(publish, dateFormatter)
         data = {
@@ -141,7 +153,7 @@ def get_ettoday_news(keyword):
             "date":published_date,
             "keyword":keyword
         }
-        expect_time = datetime.today() - timedelta(hours=8)
+        expect_time = datetime.today() - timedelta(hours=NEWS_TIME_LIMIT)
         if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
@@ -155,13 +167,11 @@ def get_TVBS_news(keyword):
     titles = soup.select('h2.search_list_txt')
     urls = soup.select('span.search_list_box > a')
     dates = soup.select('span.publish_date')
-    images = soup.select('img.lazyimage')
     publisher = 'TVBS新聞網'
     for i in range(len(titles)):
         title = titles[i].text
         url = urls[i].get('href')
         publish = dates[i].text
-        image = images[i].get('data-original')
         dateFormatter = "%Y/%m/%d %H:%M"
         published_date = datetime.strptime(publish, dateFormatter)
         data = {
@@ -171,7 +181,7 @@ def get_TVBS_news(keyword):
             "date":published_date,
             "keyword":keyword
         }
-        expect_time = datetime.today() - timedelta(hours=8)
+        expect_time = datetime.today() - timedelta(hours=NEWS_TIME_LIMIT)
         if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
@@ -185,7 +195,6 @@ def get_china_news(keyword):
     titles = soup.select('h3 > a')
     dates = soup.select('time')
     publisher = '中時新聞網'
-    images = soup.select('img.photo')
     for i in range(len(titles)):
         title = titles[i].text
         url = titles[i].get('href')
@@ -199,7 +208,7 @@ def get_china_news(keyword):
             "date":published_date,
             "keyword":keyword
         }
-        expect_time = datetime.today() - timedelta(hours=8)
+        expect_time = datetime.today() - timedelta(hours=NEWS_TIME_LIMIT)
         if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
@@ -213,12 +222,10 @@ def get_storm_news(keyword):
     titles = soup.select('p.card_title')
     urls = soup.select('a.card_substance')
     publish_dates = soup.select('span.info_time')
-    images = soup.select('img.card_img')
     publisher = '風傳媒'
     for i in range(len(titles)):
         title = titles[i].text
         url = 'https://www.storm.mg' + urls[i].get('href')
-        image = images[i].get('src').replace('150x150','800x533')
         publish_date = publish_dates[i].text
         dateFormatter = "%Y-%m-%d %H:%M"
         published_date = datetime.strptime(publish_date, dateFormatter)
@@ -229,7 +236,7 @@ def get_storm_news(keyword):
             "date":published_date,
             "keyword":keyword
         }
-        expect_time = datetime.today() - timedelta(hours=8)
+        expect_time = datetime.today() - timedelta(hours=NEWS_TIME_LIMIT)
         if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
@@ -257,7 +264,7 @@ def get_ttv_news(keyword):
             "date":published_date,
             "keyword":keyword
         }
-        expect_time = datetime.today() - timedelta(hours=8)
+        expect_time = datetime.today() - timedelta(hours=NEWS_TIME_LIMIT)
         if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
@@ -271,13 +278,11 @@ def get_ftv_news(keyword):
     titles = soup.select('div.title')
     urls = soup.select('ul > li > a.clearfix')
     publishes = soup.select('div.time')
-    images = soup.select('img[loading]')
     publisher = '民視新聞網'
     for i in range(len(urls)):
         url = 'https://www.ftvnews.com.tw/'+urls[i].get('href')
         title = titles[i].text
         publish = publishes[i].text
-        image = images[i].get('src')
         dateFormatter = "%Y/%m/%d %H:%M:%S"
         published_date = datetime.strptime(publish, dateFormatter)
         data = {
@@ -287,7 +292,7 @@ def get_ftv_news(keyword):
             "date":published_date,
             "keyword":keyword
         }
-        expect_time = datetime.today() - timedelta(hours=8)
+        expect_time = datetime.today() - timedelta(hours=NEWS_TIME_LIMIT)
         if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
@@ -306,11 +311,6 @@ def get_cna_news(keyword):
         url = urls[i].get('href')
         title = titles[i].text
         publish = dates[i].text
-        image_url = urls[i].img
-        if image_url != None:
-            image = image_url['data-src'].replace('/200/','/400/')
-        else:
-            image = None
         dateFormatter = "%Y/%m/%d %H:%M"
         published_date = datetime.strptime(publish, dateFormatter)
         data = {
@@ -320,7 +320,7 @@ def get_cna_news(keyword):
             "date":published_date,
             "keyword":keyword
         }
-        expect_time = datetime.today() - timedelta(hours=8)
+        expect_time = datetime.today() - timedelta(hours=NEWS_TIME_LIMIT)
         if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
@@ -332,7 +332,6 @@ def get_ltn_news(keyword):
     res = requests.get(url=url,headers=headers)
     soup = BeautifulSoup(res.text, 'html.parser')
     titles = soup.find_all("a", class_="tit")
-    images = soup.select('img.lazy_imgs')
     publisher = '自由時報電子報'
     for i in range(len(titles)):
         title = titles[i]['title'].replace('\u3000',' ') #將全形space取代為半形space
@@ -356,16 +355,16 @@ def get_ltn_news(keyword):
             "date":published_date,
             "keyword":keyword
         }
-        expect_time = datetime.today() - timedelta(hours=8)
+        expect_time = datetime.today() - timedelta(hours=NEWS_TIME_LIMIT)
         if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
                 requests.post(post_api_url,data=data)
             else:
                 break
             
-@app.task
-def test():
-    return 'Good'
+# @app.task
+# def test():
+#     return 'Good'
 
 if __name__ == "__main__":
     get_udn_news.delay('台灣')
