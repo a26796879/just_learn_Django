@@ -1,16 +1,15 @@
-from celery import Celery, shared_task
-import time
+from celery import shared_task
 import requests
 import urllib
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
-app = Celery('tasks', broker='amqp://niceguy:niceguy@35.227.175.4:5672')
-app.conf.update(worker_pool_restarts=True)
+from just_learn.celery import app
 
 post_api_url = 'http://34.105.13.75/news/'
 check_exist_url = 'http://34.105.13.75/news_filter/?name='
 headers = {
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36'
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) \
+        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36'
 }
 
 NEWS_TIME_LIMIT = 8
@@ -23,18 +22,13 @@ class News:
         self.date = date
     def post_to_db(self):
         pass
-
-# @app.on_after_configure.connect
-# def setup_periodic_tasks(sender, **kwargs):
-#     # Calls test('hello') every 10 seconds.
-#     sender.add_periodic_task(10.0, test.s('hello'), name='add every 10')
     
 @shared_task
 def send_email(email, token):
     print ("sending email...")
     print ("you can saving a file or log a message here to verify it.")
 
-@shared_task
+@app.task
 def add(x, y):
     return x + y
 
@@ -74,6 +68,7 @@ def get_udn_news(keyword):
             "date":published_date,
             "keyword":keyword
         }
+        print(add(1,2))
         expect_time = datetime.today() - timedelta(hours=NEWS_TIME_LIMIT)
         if requests.get(check_exist_url+ urllib.parse.quote_plus(title)).json() == []:
             if published_date >= expect_time:
